@@ -1,4 +1,4 @@
-# --- IMPORRTS
+# --- IMPORTS
 # ------ EXT. MODULES : 
 import numpy as np # check if necessary
 # ------ OWN FUNCTIONS : 
@@ -6,6 +6,8 @@ from TransformData import * # import data and feature creation
 from Prior import defPrior # function handle for f(a)
 from CondDist import defCondDist # function hangle for f(d|a)
 
+# --- ASSUMPTIONS ON THE MODEL : 
+# xi are iid
 
 
 # --- HANDLE EXTERNAL INPUTS 
@@ -19,7 +21,7 @@ from CondDist import defCondDist # function hangle for f(d|a)
 priorFlag = 1
 condFlag = 1
 
-#redeem conditional distribution function 
+# redeem conditional distribution function 
 fcond = defCondDist(condlfag)
 
 # redeem prior function 

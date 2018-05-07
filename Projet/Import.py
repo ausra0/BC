@@ -28,12 +28,18 @@ with open('data.csv', 'r') as f:
 header = li[0]
 li = li[1:]
 
-header = ['Brand', 'Item ', 'Calories', 'TotalFat', 'TransFat', 'SatFat', 'Sodium', 'Carbohydrates', 'Cholesterol', 'Fibre', 'Sugars', 'Protein', 'VitaminA', 'VitaminC', 'Calcium', 'Iron']
+header = ['Brand', 'Item', 'ServSize', 'Calories', 'TotalFat', 'TransFat', 'SatFat', 'Sodium', 'Carbohydrates', 'Cholesterol', 'Fibre', 'Sugars', 'Protein', 'VitaminA', 'VitaminC', 'Calcium', 'Iron']
 
 # convert data into pands dataframe
 df = pd.DataFrame(li, columns=header, dtype='float')
+
+# remap Brand classification 
+# MacDo = -1
+# Starbucks = 1
+df['Brand'] = df['Brand'].map({1: 1, 0:-1})
 
 if(flag1):
     # display attributes (for reference while running other programs)
     print('Attributes for this dataset :')
     print(header)
+    print(df[1:10])

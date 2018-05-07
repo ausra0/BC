@@ -17,14 +17,14 @@ def visual(param1, param2):
     groups = df.groupby('Brand')
 
     # define companies dictionnary 
-    dic = {0 : 'McDo', 1: 'Starbucks'}
+    dic = {-1 : 'McDo', 1: 'Starbucks'}
 
     # do the plot
     fig, ax = plt.subplots()
     for name, group in groups:
         ax.plot(getattr(group, param1), getattr(group, param2), marker='.', linestyle='', ms=3, label=dic[name])
         ax.legend()
-    plt.suptitle(param1+' vs '+param2)
+    plt.suptitle(param1+' vs '+param2+' (per g. of food)')
     plt.xlabel(param1)
     plt.ylabel(param2)
     plt.show()
