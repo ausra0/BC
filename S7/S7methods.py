@@ -130,7 +130,7 @@ def GVA(phi, gradphi, hessphi, mu0, L0, eps, maxiter):
     sig1 = sla.expm(L1)**2
     return mu1, sig1 
 
-
+"""
 from Tools import *
 
 mu = np.ones((3, 1))
@@ -150,3 +150,4 @@ mut, sigt = GVA(phi, gradphi, hessphi, mu0, L0, eps, maxiter)
 
 print(mut)
 print(npl.inv(sigt))
+"""
