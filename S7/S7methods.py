@@ -98,12 +98,12 @@ def GVA(phi, gradphi, hessphi, mu0, L0, eps, maxiter):
     k = 0 # iterator
     l = 40 # number of samples 
     d = len(mu0) # dimension
-    lam = -0.01
+    lam = -0.1
 
     assert mu0.shape==(d, 1), "mu0 not 2D"
     assert mu2.shape==(d, 1), "mu2 not 2D"
 
-    while((k<maxiter) or ( (npl.norm(mu2 - mu1)/npl.norm(mu2)>eps) or (npl.norm(L2 - L1)/npl.norm(L2)>eps) )):
+    while((k<maxiter) or ( (npl.norm(mu2 - mu1)/npl.norm(mu2)>eps) and (npl.norm(L2 - L1)/npl.norm(L2)>eps) )):
         k = k + 1
 
         # generate mu~N(0, 1)
@@ -133,17 +133,20 @@ def GVA(phi, gradphi, hessphi, mu0, L0, eps, maxiter):
 
 from Tools import *
 
-mu = np.zeros((3, 1))
-sig = np.eye(3)
+mu = np.ones((3, 1))
+sig = 2*np.eye(3)
 
 phi = logNormal(mu, sig)
 gradphi = gradLogNormal(mu, sig)
 hessphi = hessLogNormal(mu, sig)
 
-mu0 = np.ones((3, 1))
+mu0 = np.zeros((3, 1))
 L0 = np.ones((3, 3))
 
-eps = 0.01
-maxiter = 50
+eps = 0.001
+maxiter = 100
 
 mut, sigt = GVA(phi, gradphi, hessphi, mu0, L0, eps, maxiter)
+
+print(mut)
+print(npl.inv(sigt))
