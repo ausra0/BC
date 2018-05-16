@@ -1,6 +1,7 @@
 #################################################
 ####### OPTIMIZATION TECHNIQUES FOR STATS #######
 #################################################
+# from S3
 # ---  CONTAINS : 
 # GD            Gradient Descent
 # LSGD          Line-Search Gradient Descent
