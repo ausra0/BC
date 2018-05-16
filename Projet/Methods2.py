@@ -2,12 +2,8 @@
 ###### SAMPLING METHODS III
 ######################################################
 # --- CONTAINS : 
-# MH            Metropolis-Hastings 
-# 
-# --- PROTOTYPES : 
-# 
-# --- REQUIRES : 
-# 
+# MHRW			Metropolis-Hastings 
+# MHRW			Metropolis-Hastings with burn-in
 #####################################################
 import numpy as np 
 import numpy.random as rdm
