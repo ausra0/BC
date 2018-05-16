@@ -1,6 +1,6 @@
 # --- IMPORTS
 # ------ EXT. MODULES : 
-import numpy as np
+import numpy as npy
 # ------ OWN FUNCTIONS : 
 from TransformData import * # import data and feature creation
 from Prior import defPrior # function handle for f(a)
