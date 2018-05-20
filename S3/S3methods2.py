@@ -1,6 +1,9 @@
 ########################################################
 ################ LAPLACE APPROXIMATION #################
 ########################################################
+# from S3
+# Rq : log(fh(theta|d)) = log(f(theta)) + log(f(d|theta))
+
 # --- IMPORTS 
 import numpy as np 
 from S3methods import *
@@ -55,8 +58,8 @@ def laplace(post, post1, post2, flagmu, flagsig):
              sig (matrix) Laplace approx of stiff. matrix (cov^-1)
     """ 
     
-    # search for mu = argmax_{theta}(log(f(theta|d))) 
-    # one of the following methods : 
+    # search for mu = argmax_{theta}(log(f(theta|d))) (theta_MAP)
+    # using one of the following methods : 
     # 0: GD 
     #   - 
     mu = findmu(post, post1, flagmu)

@@ -1,5 +1,5 @@
-from TransformData import *
-# df is the name of the dataset containg the dataset
+from TestTrain import *
+# dtrain is the name of the dataset containg the dataset
 
 import matplotlib.pyplot as plt
 import sys
@@ -14,7 +14,7 @@ param2 = params[2]
 
 def visual(param1, param2):
     # group the data in the different categories 
-    groups = df.groupby('Brand')
+    groups = dtrain.groupby('Brand')
 
     # define companies dictionnary 
     dic = {-1 : 'McDo', 1: 'Starbucks'}

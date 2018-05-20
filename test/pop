@@ -1,0 +1,8 @@
+#!/bin/bash 
+
+echo "hello" 
+
+read -p "enter smth"
+
+echo "success !"
+

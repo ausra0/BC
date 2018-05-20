@@ -1,0 +1,13 @@
+#!/bin/sh
+
+python Mod11.py 
+
+echo "Methods definition done"
+
+python Mod12.py 
+
+echo "Sampling done" 
+
+python Mod13.py
+
+echo "Error computation done" 

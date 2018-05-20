@@ -1,6 +1,6 @@
 # --- IMPORTS
 # ------ EXT. MODULES : 
-import numpy as npdfh
+import numpy as np
 # ------ OWN FUNCTIONS : 
 from TransformData import * # import data and feature creation
 from Prior import defPrior # function handle for f(a)
@@ -20,7 +20,7 @@ from Methods2.py import IS # Importance-sampling
 # f(a|d) ~ f(d|a)*f(a) 
 
 # parameters of our model (internal to the program)
-priorFlag = 77
+priorFlag = 1
 condFlag = 1
 N = 1000 # number of samples 
 

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+python 1.py
+
+read -sp 'Press [Enter] to continue ...' 
+
+echo ''
+
+python 2.py
+
+read -sp 'Press [Enter] to continue ...'
+
+echo ''
+
+python 3.py 
+
+

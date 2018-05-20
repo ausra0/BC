@@ -1,7 +1,11 @@
 # Project description : 
 Project for Bayesian Computation course. 
 
+# Important Remark : 
+File sections that need attention when copying, renaming files are maked with (X). That can be found easily in vim : /(X)
 
+# Data : 
+Fats are divided into 3 categories : total fats (unsaturate + saturated + trans), saturates (animal products, unhealthy), transfat (good fats that have been saturated wwith hydrogen to extend shelf life, induces bad cholesterol)
 
 # Content of the folder : 
 ## Undocumented : 
