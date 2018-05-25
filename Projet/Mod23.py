@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 #own (X)
 from TestTrain import *
-from Mod11 import *
+from Mod21 import *
 
 # --- LOAD DATA : (X)
 with open("./output/M2.dat", "rb") as file:
-	[exp, IC] = pickle.load(file)
+	[exp] = pickle.load(file)
 
 
 # --- TRAIN ERROR : 

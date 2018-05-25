@@ -38,6 +38,7 @@ def MHRW(theta0, maxiter, lamb, f, rando, display):
 
         # compute acceptance probability 
         p = min(1, f(theta_prop)/f(chain[len(chain)-1]))
+        print(p) 
 
         # accept-reject step 
         if(rdm.binomial(1, p)): 
@@ -46,20 +47,57 @@ def MHRW(theta0, maxiter, lamb, f, rando, display):
         else: 
             chain_prev = chain[len(chain)-1]
             chain.append(chain_prev)
+
+    # compute empirical mean 
+    mean = np.mean(np.array(chain), 0)
+   
     
-    if(display):
-        # compute empirical mean 
-        mean = np.mean(np.array(chain), 0)
-        print("Empirical mean :")
+    # compute empirical covariance 
+    cov = 1/(maxiter-1) * np.transpose(chain-mean)@(chain-mean)
+    err = 0
+    if(display):   
+        print("Empirical mean :") 
         print(mean)
 
-        # compute empirical covariance 
-        cov = 1/(maxiter-1) * np.transpose(chain-mean)@(chain-mean)
         print("Empirical covariance :")
         print(cov)
 
     # return 
-    return chain, acc_ratio/maxiter
+    return chain, mean, cov, acc_ratio/maxiter
+
+def MH(theta0, maxiter, lamb, post): 
+    # initialisation 
+    theta = theta0
+    chain = []
+    chain.append(theta0)
+    n = len(theta0) 
+    acc_ratio = 0
+
+    for i in range(0, maxiter): 
+        # generate new step from normal proposal 
+        theta_prop = theta + lamb*rdm.normal(0, 1, n)
+
+        # compute acceptance probability 
+        r = post(theta_prop)/post(chain[len(chain)-1])
+        p = min(1, r)
+        print(p)
+
+        # A-R step 
+        if (rdm.binomial(1, p)):
+            acc_ratio += 1
+            chain.append(theta_prop)
+        else: 
+            chain.append(chain[len(chain)-1])
+
+    # compute mean 
+    exp = sum(chain)/(maxiter+1)
+
+    # compute acceptance ratio 
+    ratio = acc_ratio/maxiter
+
+    return chain, ratio, exp
+
+
 
 def MHRWp(theta0, maxiter, lamb0, f, rando, display):
     """
@@ -79,7 +117,10 @@ def MHRWp(theta0, maxiter, lamb0, f, rando, display):
     while((r<0.1) or (r>0.5)):
         print("running prerun ...")
         c, r = MHRW(theta0, 100, lamb, f, rando, 0)
-        lamb = 2*lamb
+        if r<0.1: 
+            lamb = lamb/2
+        if r>0.5:
+            lamb = lamb/2
     
     # continue running
     ch, rh = MHRW(c[len(c)-1], maxiter -100, lamb/2, f, rando, display)

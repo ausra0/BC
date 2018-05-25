@@ -1,6 +1,6 @@
 #!/bin/sh
 
-python Mod11.py 
+python Mod21.py 
 
 echo "Methods definition done"
 
@@ -8,6 +8,6 @@ python Mod22.py
 
 echo "Sampling done" 
 
-python Mod13.py
+python Mod23.py
 
 echo "Error computation done" 

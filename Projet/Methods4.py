@@ -73,7 +73,7 @@ def laplace(post, post1, post2, flagmu, flagsig):
     return mu, sig
 
 #######################################################
-# /!\ NOTE :  TO SAMPLE FROM LAPLACE USE : 
+# /!\ NOTE :  TO SAMPLE FROM MULT. NORMAL USE : 
 # numpy.random.multivariate_normal(mean, cov[, size, check_valid, tol])
 # Keep in mind that sig = cov^-1
 #######################################################
