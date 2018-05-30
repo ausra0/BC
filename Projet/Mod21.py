@@ -37,7 +37,7 @@ def post(theta):
     prod = 1
     for i in range(0, len(tr)):
         x = np.array(dft.loc[i, :])
-        prod = prod * 1.1 * 1/(1 + np.exp(-x.dot(theta)))
+        prod = prod * 1.06 * 1/(1 + np.exp(-x.dot(theta)))
     return prod * np.exp(-0.5*(theta-mean)@K@(theta-mean))
 
 def indcond(theta, i):
@@ -47,8 +47,7 @@ def indcond(theta, i):
 def S(theta): 
     return theta
 
-"""
-# test posterior 
+# --- SANITY CHECK 
 import numpy.random as rdm 
 import matplotlib.pyplot as plt 
 n = 100
@@ -57,9 +56,8 @@ a1 = np.linspace(0, 16, n)
 a2 = np.linspace(0, 16, n)
 for i in range(0, n): 
     theta = [a1[i], a2[i]]
-    res = prior(theta)
+    res = post(theta)
     r1.append(res)
 
 plt.plot(a1, r1)
 plt.show()
-"""

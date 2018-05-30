@@ -127,3 +127,5 @@ def MHRWp(theta0, maxiter, lamb0, f, rando, display):
     
     # return 
     return c + ch, rh
+
+# --- SANTITY CHECK

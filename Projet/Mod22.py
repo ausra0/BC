@@ -9,9 +9,11 @@ from Mod21 import *
 from Methods2 import * # Metropolis-Hastings
 
 # --- Define variables for Metropolis Hastings 
-theta0 = 6*np.ones(2)
+n = 2
+theta0 = 6*np.ones(n)
 maxiter = 1000
-lamb = 10
+lamb = 2.4*(n**(-0.5))
+# optimal lambda is given by 2.4*(n**(-0.5))*scale of target
 
 # --- Metropolis-Hastings Call
 mchain, ratio, exp = MH(theta0, maxiter, lamb, post)
