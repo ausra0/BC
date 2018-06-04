@@ -41,8 +41,9 @@ def IS(h, sampleh, f, S, n):
     plt.show()
 
     # compute variables of interest
-    samples = [samples[i]/sum(weight) for i in range(0, n)]
-    expf = sum(samples)/sum(weight)
+    samples = np.array(samples)/sum(weight)
+#    expf = sum(samples)/sum(weight)
+    expf = sum(samples)
     var = 1.95*sum((samples - expf)**2)/(n*np.sqrt(n))
 
     return expf, var

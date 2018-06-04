@@ -10,7 +10,8 @@ from Methods1 import *
 
 
 # --- Importance Sampling Call
-exp, IC = IS(prior, sampleP, prior, S, n)
+# prototype : def IS(h, sampleh, f, S, n)
+exp, IC = IS(h, sampleh, post, S, n)
 
 # --- PRINT OUTPUT : 
 print("Theta_hat = "+str(exp)+" +/-"+str(IC))

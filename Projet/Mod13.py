@@ -18,18 +18,23 @@ ninv = 1/(2*len(tr))
 pred = []
 for i in tr.index.values:
     true_val = dtrain.loc[i,'Brand']
-    pred_val = 2*rdm.binomial(1, indcond(exp, i))-1
+    pred_val = indcond(exp, i)
     pred.append(pred_val) # save this value
     err += abs(true_val - pred_val)*ninv
 
 print("Error on training set : "+str(err))
 
 
+# check everything is fine 
+
 
 # Append predicted and true values to data
-tr.loc[:, 'pred']=pd.Series(pred)
-tr.loc[:, 'tval']=dtrain.loc[:, 'Brand']
+assert len(tr)==len(pred)
+assert len(tr)==len(ytr)
+tr = tr.assign(pred=pd.Series(pred)) #, index=tr.index)
+tr = tr.assign(tval=ytr, index=tr.index)
 
+print(tr[1:10])
 
 # --- DISPLAY MISSCLASSIFICATIONS : 
 param1 = "Calories" #(X)
