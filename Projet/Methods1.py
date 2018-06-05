@@ -15,7 +15,7 @@ import random as rdm
 import numpy as np
 import matplotlib.pyplot as plt 
 
-def IS(h, sampleh, f, S, n): 
+def IS(h, sampleh, f, S, n, flag): 
     """
     IS is the implementation of the Importance Sampling method
     :param h: (function handle) proposal distribution 
@@ -23,7 +23,8 @@ def IS(h, sampleh, f, S, n):
     :param f: (function handle) target distribution
     :param S: (function handle) we want : E[S(theta)]
     :param n: (scalar) number of samples wanted
-    
+    :param flag: (int) 0 = logit, 1 = probit cond. 
+
     :return: expf, var 
     """
     weight = []
@@ -31,19 +32,18 @@ def IS(h, sampleh, f, S, n):
     samples = []
     for _ in range(0, n): 
         theta = sampleh()
-        wi = f(theta)/h(theta)
+        wi = f(theta, flag)/h(theta)
         samples.append(wi*theta)
         weight.append(wi)
         exp += wi*S(theta)
     
     # sanity check plot weights 
     plt.plot(weight)
+    plt.savefig("plots/weights_IS.png")
     plt.show()
 
     # compute variables of interest
-    samples = np.array(samples)/sum(weight)
-#    expf = sum(samples)/sum(weight)
-    expf = sum(samples)
+    expf = sum(np.array(samples))/sum(weight)
     var = 1.95*sum((samples - expf)**2)/(n*np.sqrt(n))
 
     return expf, var
