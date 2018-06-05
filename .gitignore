@@ -2,3 +2,4 @@
 *.pyo
 *.png
 *.dat
+/Exemples/*
