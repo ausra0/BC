@@ -17,8 +17,7 @@ ts = dtest[["Calories", "TransFat"]]
 dft = df[["Calories", "TransFat"]]
 
 # --- ADD INTERCEPT 
-#tr.assign(ones=pd.Series([1]*len(tr), index=tr.index))
-#ts.assign(ones=pd.Series([1]*len(ts), index=ts.index))
-#dft.assign(ones=pd.Series([1]*len(dft), index=dft.index))
+#tr = tr.assign(ones=pd.Series([1]*len(tr), index=tr.index))
+#ts = ts.assign(ones=pd.Series([1]*len(ts), index=ts.index))
+#dft = dft.assign(ones=pd.Series([1]*len(dft), index=dft.index))
 
-tr[1:10]
