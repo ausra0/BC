@@ -33,5 +33,5 @@ for i in range(len(target_names)):
 
 plt.tight_layout()
 
-plt.savefig("correlation_matrix.png", dpi=300, bbox_inches="tight")
+plt.savefig("./plots/correlation_matrix.png", dpi=300, bbox_inches="tight")
 plt.show()
