@@ -2,13 +2,13 @@
 
 echo "Running mathod definition ..."
 
-python Mod21.py 
+python Mod31.py 
 
 echo "Running sampling ..."
 
-python Mod22.py 
+python Mod32.py 
 
 echo "Computing error ...." 
 
-python Mod23.py
+python Mod33.py
 

@@ -1,13 +1,14 @@
 #!/bin/sh
 
+echo "Running mathod definition ..."
+
 python Mod11.py 
 
-echo "Methods definition done"
+echo "Running sampling ..."
 
 python Mod12.py 
 
-echo "Sampling done" 
+echo "Computing error ...." 
 
 python Mod13.py
 
-echo "Error computation done" 
