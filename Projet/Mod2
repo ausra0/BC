@@ -1,9 +1,5 @@
 #!/bin/sh
 
-echo "Running mathod definition ..."
-
-python Mod21.py 
-
 echo "Running sampling ..."
 
 python Mod22.py 
