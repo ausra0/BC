@@ -40,7 +40,6 @@ def IS(h, sampleh, f, S, n, flag):
     # sanity check plot weights 
     plt.plot(weight)
     plt.savefig("plots/weights_IS.png")
-    plt.show()
 
     # compute variables of interest
     expf = sum(np.array(samples))/sum(weight)
