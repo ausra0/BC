@@ -5,21 +5,24 @@
 
 # --- IMPORTS 
 import numpy as np 
-from S3methods import *
+from Methods3 import *
 
 # --- ACCESSORY FUNCTIONS OF LAPLACE ------------------
-def findmu(post, post1, flagmu): 
+def findmu(theta0, post, post1, post2, n, flagmu): 
     """
     FINDMU accesory function for laplace (finding mu of approximation)
     :param post: (function handle) log posterior 
     :param post1: (function handle) gradient of log posterior
+    :param post2: (function handle) hessian of the log posterior
     :param flagmu: (scalar) flag for the method to use : 
                     0: Conjugate Gradient 
 
     :return: mu (vector of size of theta) approximate mean  
     """
     if flagmu==0:
-        steps, func = GD(np.array([0]), f, f1, 1, 0.0001, 100)
+        steps, func = GD(theta0, post, post1, 1/10, 0.0001, 100)
+    elif flagmu==1: 
+        steps, func = Newton(theta0, post, post1, post2, 0.01, 100)
     return steps[len(steps)-1] 
 
 def findsig(mu, dist, flagsig):
@@ -32,14 +35,14 @@ def findsig(mu, dist, flagsig):
     :return: sig (square matrix of size theta) approximate -log covariance^-1
     """
     if flagsig==0: # exact
-        sig = dist(mu)
+        sig = -dist(mu)
     if flagsig==1: # approximate
         print("sig approx. not implemented yet")
         return 
     return sig
 
 # --- LAPLACE MAIN FUNCTION ---------------------------
-def laplace(post, post1, post2, flagmu, flagsig): 
+def laplace(theta0, post, post1, post2, n, flagmu, flagsig): 
     """ 
     LAPLACE is the implementation of the laplace method
     ---------------------------------------------------
@@ -60,8 +63,8 @@ def laplace(post, post1, post2, flagmu, flagsig):
     # search for mu = argmax_{theta}(log(f(theta|d))) 
     # one of the following methods : 
     # 0: GD 
-    #   - 
-    mu = findmu(post, post1, flagmu)
+    # 1: Newton
+    mu = findmu(theta0, post, post1, post2,  n, flagmu)
     
     # find covariance sig = -[log(f(mu|d))]''
     if flagsig==0:
