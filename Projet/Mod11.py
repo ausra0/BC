@@ -14,7 +14,7 @@ lentr = len(list(tr)) # number of observations in train set
 
 # Define mu matrix
 if lentr==2: 
-    mu = np.array([-5, 3])
+    mu = np.array([-6, 4])
 elif lentr==3:
     mu = np.array([0, -5, 3])
 else: 
@@ -77,7 +77,7 @@ def post(theta, flag):
             assert (flag==0 or flag==1)
 
         # compute likelihood
-        prod = prod * ((p**y)*((1-p)**(1-y)))*1.4
+        prod = prod * ((p**y)*((1-p)**(1-y)))*1.24
 
     # add in prior
     return prod * np.exp(-0.5*(theta-mu)@K@(theta-mu))
@@ -86,7 +86,6 @@ def post(theta, flag):
 
 
 # logistic likelihood
-# disjoint likelihood
 def indcond(theta, i, flag):
     # retrieve data
     x = np.array(dft.loc[i, :])
@@ -114,8 +113,8 @@ def S(theta):
 def GenerateSampleData(theta, flag):
     # used by visual
     n = 25
-    cal = np.linspace(min(dft['Calories']), max(dft['Calories']), n)
-    fat = np.linspace(min(dft['TransFat']), max(dft['TransFat']), n)
+    cal = np.linspace(min(dft[list(tr)[0]]), max(dft[list(tr) [0]]), n)
+    fat = np.linspace(min(dft[list(tr)[1]]), max(dft[list(tr)[1]]), n)
 
     points = []
     for i in range(0, n):
@@ -135,7 +134,7 @@ def GenerateSampleData(theta, flag):
             points.append([y, cal[i], fat[j]])
 
     # convert to dataframe 
-    points = pd.DataFrame(points, columns=['Brand', 'Calories', 'TransFat'])
+    points = pd.DataFrame(points, columns=['Brand', list(tr)[0], list(tr)[1]])
     return points 
 
 
@@ -164,6 +163,8 @@ def visual(param1, param2, theta0):
     plt.suptitle(param1+' vs '+param2+' ('+str(theta0)+')')
     plt.xlabel(param1)
     plt.ylabel(param2)
-    plt.savefig("plots/classif_quality.png")
+    plt.savefig("plots/error_mod11.png")
     plt.show()
+
+
 

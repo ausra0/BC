@@ -14,33 +14,30 @@ with open("./output/M1.dat", "rb") as file:
 
 # --- TRAIN ERROR : 
 err = 0
-ninv = 1/(2*len(tr))
+ninv = 1/(2*len(tr)) # /2 because values in +/-1
 pred = []
 for i in tr.index.values:
     true_val = dtrain.loc[i,'Brand']
-    pred_val = indcond(exp, i)
+    pred_val = indcond(exp, i, flag)
     pred.append(pred_val) # save this value
     err += abs(true_val - pred_val)*ninv
 
 print("Error on training set : "+str(err))
 
 
-# check everything is fine 
-
-
 # Append predicted and true values to data
 assert len(tr)==len(pred)
 assert len(tr)==len(ytr)
-tr = tr.assign(pred=pd.Series(pred)) #, index=tr.index)
-tr = tr.assign(tval=ytr, index=tr.index)
+tr = tr.assign(pred=pd.Series(pred, index=tr.index))
+tr = tr.assign(tval=ytr)
 
-print(tr[1:10])
+
 
 # --- DISPLAY MISSCLASSIFICATIONS : 
-param1 = "Calories" #(X)
-param2 = "TransFat" #(X)
+param1 = list(tr)[0]
+param2 = list(tr)[1]
 
-def visual(param1, param2):
+def visual_error(param1, param2):
     # group the data in the different categories
     groups = tr.groupby(("tval", "pred"))
 
@@ -55,8 +52,9 @@ def visual(param1, param2):
     plt.suptitle(param1+' vs '+param2+' (per g. of food)')
     plt.xlabel(param1)
     plt.ylabel(param2)
-    plt.savefig("error.png")
+    plt.savefig("./plots/error_mod1.png")
     plt.show()
 
 # PLOT
-visual(param1, param2)
+visual_error(param1, param2)
+visual(param1, param2, exp)
