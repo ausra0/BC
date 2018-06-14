@@ -5,7 +5,8 @@ import pickle
 n = 10
 t = np.zeros(n)
 
-filename = 'Mod12'
+#filename = 'Mod12'
+filename = 'Mod42'
 
 for i in range(0, n): 
     # run the file 
