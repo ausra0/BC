@@ -9,22 +9,15 @@ from Mod21 import *
 from Methods2 import * # Metropolis-Hastings
 
 # --- Define variables for Metropolis Hastings 
-n = 2
-theta0 = 6*np.ones(n)
-maxiter = 1000
-lamb = 2.4*(n**(-0.5))
-# optimal lambda is given by 2.4*(n**(-0.5))*scale of target
+n = len(list(tr)) # dimension 
+theta0 = np.array([0, 0]) # initial guess
+print("post at theta0 :")
+print(post(theta0, flag))
+maxiter = 400
+lamb = 1
 
 # --- Metropolis-Hastings Call
-mchain, ratio, exp = MH(theta0, maxiter, lamb, post)
-"""
-# --- Importance Sampling Call
-exp, IC = IS(prior, sampleP, post, S, n) 
-"""
-"""
-# --- COMPUTE IC : 
-IC = 1.95*sum((samples - expf)**2)/(n*np.sqrt(n))
-"""
+mchain, ratio, exp = MH(theta0, maxiter, lamb, post, flag)
 
 # --- SANITIY CHECK : 
 print("Acceptance ratio : "+str(ratio))
