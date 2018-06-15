@@ -9,7 +9,7 @@ import numpy.random as rdm
 
 # --- MAIN()
 # cut the dataset
-dtrain = df.sample(frac=0.8, random_state=32)
+dtrain = df.sample(frac=0.7, random_state=32)
 dtest = df.drop(dtrain.index)
 
 # --- TRIM TRAIN AND TEST SET :
@@ -34,11 +34,13 @@ dft = df[["Calories", "TotalFat"]]
 """
 
 # --- CREATE OUTLIERS DATASETS 
+"""
 fract = 0.1 # fraction of outliers 
 
 victims = ytr.sample(frac = fract, random_state = 32).index
 ytrout = ytr
 ytrout.loc[victims] = -1*ytrout.loc[victims]
+"""
 
 # --- ADD INTERCEPT 
 #tr = tr.assign(ones=pd.Series([1]*len(tr), index=tr.index))
