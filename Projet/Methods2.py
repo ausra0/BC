@@ -1,131 +1,57 @@
-######################################################
-###### SAMPLING METHODS III
-######################################################
-# --- CONTAINS : 
-# MHRW			Metropolis-Hastings 
-# MHRW			Metropolis-Hastings with burn-in
-#####################################################
 import numpy as np 
-import numpy.random as rdm
- 
-def MHRW(theta0, maxiter, lamb, f, rando, display): 
-    """
-    MHRW is the implementation of the Metropolis-Hastings sampling with random walk
-    :param theta0: (scalar) initial step 
-    :param maxiter: (scalar) maximum number of iterations 
-    :param lamb: (scalar) one step size parameter
-    :param f: (function handle) our distribution 
-    :param rando: (0, 1) 0-unif error, 1-normal error
-    :param display: (bool) if to display covariance and mean
+import numpy.random as rdm 
+from TestTrain import * 
+from Mod21 import * 
 
-    :return:
-    """
-    theta = theta0 
-    chain = []
-    chain.append(theta0)
-    n = len(theta0)
-    acc_ratio = 0
-
-    for i in range(0, maxiter): 
-        # generate new step
-        if(rando==0): 
-            theta_prop = theta + lamb*rdm.uniform(-1, 1, n)
-        elif(rando==1): 
-            theta_prop = theta + lamb*rdm.normal(0, 1, n)
-        else: 
-            print("error")
-            return
-
-        # compute acceptance probability 
-        p = min(1, f(theta_prop)/f(chain[len(chain)-1]))
-        print(p) 
-
-        # accept-reject step 
-        if(rdm.binomial(1, p)): 
-            acc_ratio += 1
-            chain.append(theta_prop)
-        else: 
-            chain_prev = chain[len(chain)-1]
-            chain.append(chain_prev)
-
-    # compute empirical mean 
-    mean = np.mean(np.array(chain), 0)
-   
+def MH(theta0, maxiter, lamb, post, flag): 
     
-    # compute empirical covariance 
-    cov = 1/(maxiter-1) * np.transpose(chain-mean)@(chain-mean)
-    err = 0
-    if(display):   
-        print("Empirical mean :") 
-        print(mean)
-
-        print("Empirical covariance :")
-        print(cov)
-
-    # return 
-    return chain, mean, cov, acc_ratio/maxiter
-
-def MH(theta0, maxiter, lamb, post): 
-    # initialisation 
+    k = 0
+    steps = np.zeros((maxiter+1, len(theta0)))
+    steps[0, :] = theta0
     theta = theta0
-    chain = []
-    chain.append(theta0)
-    n = len(theta0) 
-    acc_ratio = 0
 
     for i in range(0, maxiter): 
-        # generate new step from normal proposal 
-        theta_prop = theta + lamb*rdm.normal(0, 1, n)
-
-        # compute acceptance probability 
-        r = post(theta_prop)/post(chain[len(chain)-1])
-        p = min(1, r)
-        print(p)
-
-        # A-R step 
-        if (rdm.binomial(1, p)):
-            acc_ratio += 1
-            chain.append(theta_prop)
+        theta_prop = theta + lamb*rdm.multivariate_normal(np.zeros(len(theta0)), np.eye(len(theta0)))
+        r = min(post(theta_prop, flag)/post(theta, flag), 1)
+        if(rdm.uniform(0, 1)<= r): 
+            k += 1 
+            theta = theta_prop
+            steps[i+1, :] = theta
         else: 
-            chain.append(chain[len(chain)-1])
+            steps[i+1, :] = theta
 
-    # compute mean 
-    exp = sum(chain)/(maxiter+1)
+    return steps, k/maxiter, np.mean(steps, 0) 
 
-    # compute acceptance ratio 
-    ratio = acc_ratio/maxiter
+# --- SANITY CHECK 
+mu = np.array([-4, 3])
+sig = np.eye(2)
 
-    return chain, ratio, exp
+def post(theta, flag): 
+    assert len(theta)==len(list(tr))
+
+    prod = 1
+    for i in range(0, len(tr)):
+        # retrive data
+        x = np.array(tr.iloc[i])
+        y = 0.5*(ytr.iloc[i] + 1)
+
+        # compute proba
+        p = 1/(1 + np.exp(-x.dot(theta)))
+
+        # compute likelihood
+        prod = prod * ((p**y)*((1-p)**(1-y)))*1.4
+
+    # add in prior
+    return prod * np.exp(-0.5*(theta-mu)@K@(theta-mu))
 
 
+theta0 = np.zeros(2)
+maxiter = 200
+lamb = 0.5 
+flag = 0
 
-def MHRWp(theta0, maxiter, lamb0, f, rando, display):
-    """
-    MHRWp is the implementation of the Metropolis-Hastings sampling with random walk
-    :param theta0: (scalar) initial step 
-    :param maxiter: (scalar) maximum number of iterations 
-    :param lamb0: (scalar) one step size parameter
-    :param f: (function handle) our distribution 
-    :param rando: (0, 1) 0-unif error, 1-normal error
+steps, acc_ratio, exp = MH(theta0, maxiter, lamb, post, flag)
 
-    :return:
-    """
-
-    lamb = lamb0
-    # prerun
-    r = 0
-    while((r<0.1) or (r>0.5)):
-        print("running prerun ...")
-        c, r = MHRW(theta0, 100, lamb, f, rando, 0)
-        if r<0.1: 
-            lamb = lamb/2
-        if r>0.5:
-            lamb = lamb/2
-    
-    # continue running
-    ch, rh = MHRW(c[len(c)-1], maxiter -100, lamb/2, f, rando, display)
-    
-    # return 
-    return c + ch, rh
-
-# --- SANTITY CHECK
+import matplotlib.pyplot as plt 
+plt.plot(steps[:, 0], steps[:, 1])
+plt.show()
